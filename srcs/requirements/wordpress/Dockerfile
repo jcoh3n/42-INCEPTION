@@ -1,9 +1,6 @@
 FROM debian:bullseye
 
-RUN
+RUN apt update && apt upgrade && apt install -y \
+    php-fmp
 
-COPY
-
-EXPOSE 
-
-ENTRYPOINT 
+CMD ["php-fpm8.2", "-F"]
