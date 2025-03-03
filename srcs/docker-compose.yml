@@ -16,4 +16,13 @@ services:
   wordpress:
     build: requirements/wordpress
     container_name: wp-php
+  mariadb:
+    build: requirements/mariadb
+    container_name: mariadb
     
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  inc
