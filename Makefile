@@ -1,7 +1,7 @@
 NAME = inception
 
-# Répertoires de données
-DATA_DIR = /Users/jcohen/data
+# Répertoires de données - utiliser un chemin relatif ou un chemin où vous avez les droits
+DATA_DIR = $(HOME)/data
 WORDPRESS_DATA = $(DATA_DIR)/wordpress
 MARIADB_DATA = $(DATA_DIR)/mariadb
 
