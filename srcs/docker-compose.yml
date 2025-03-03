@@ -1,0 +1,18 @@
+# le seul porte qu'ouvrira Docker-Compose sur votre machine sera le 443
+
+
+
+# NGINX (avec TLS v1.2)
+# WordPress (avec php-fpm configuré)
+# MARIADB (sans NGINX)
+
+
+version: '3.8'
+
+services:
+  nginx:
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    
