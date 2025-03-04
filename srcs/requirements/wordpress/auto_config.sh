@@ -5,6 +5,11 @@ if [ ! -d "/run/php" ]; then
     mkdir /run/php
 fi
 
+if [ -z "${WORDPRESS_URL}" ] || [ -z "${WORDPRESS_ADMIN_USER}" ] || [ -z "${WORDPRESS_ADMIN_PASSWORD}" ]; then
+    echo "Error: Required environment variables are not set."
+    exit 1
+fi
+
 # Se place dans le dossier WordPress
 cd /var/www/wordpress
 
@@ -16,6 +21,7 @@ wp core install \
     --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
     --admin_email="${WORDPRESS_ADMIN_EMAIL}" \
     --skip-email
+    --allow-root
 
 # Crée un deuxième utilisateur
 wp user create \
@@ -23,6 +29,7 @@ wp user create \
     "${WORDPRESS_USER2_EMAIL}" \
     --role="author" \
     --user_pass="${WORDPRESS_USER2_PASSWORD}"
+    --allow-root
 
 # Démarre PHP-FPM
 php-fpm7.3 -F
