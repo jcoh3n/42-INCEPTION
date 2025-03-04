@@ -28,25 +28,25 @@ prepare:
 # Construit les images Docker
 build:
 	@echo "$(BLUE)Construction des images Docker...$(RESET)"
-	@docker-compose -f $(DOCKER_COMPOSE) build
+	@docker compose -f $(DOCKER_COMPOSE) build
 	@echo "$(GREEN)Images Docker construites avec succès.$(RESET)"
 
 # Démarre les conteneurs
 up:
 	@echo "$(BLUE)Démarrage des conteneurs...$(RESET)"
-	@docker-compose -f $(DOCKER_COMPOSE) up -d
+	@docker compose -f $(DOCKER_COMPOSE) up -d
 	@echo "$(GREEN)Conteneurs démarrés avec succès.$(RESET)"
 
 # Arrête les conteneurs
 down:
 	@echo "$(BLUE)Arrêt des conteneurs...$(RESET)"
-	@docker-compose -f $(DOCKER_COMPOSE) down
+	@docker compose -f $(DOCKER_COMPOSE) down
 	@echo "$(GREEN)Conteneurs arrêtés avec succès.$(RESET)"
 
 # Affiche le statut des conteneurs
 status:
 	@echo "$(BLUE)Statut des conteneurs:$(RESET)"
-	@docker-compose -f $(DOCKER_COMPOSE) ps
+	@docker compose -f $(DOCKER_COMPOSE) ps
 
 # Nettoie les conteneurs et les images
 clean: down
