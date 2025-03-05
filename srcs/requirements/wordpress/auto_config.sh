@@ -5,7 +5,7 @@ if [ ! -d "/run/php" ]; then
     mkdir /run/php
 fi
 
-if [ -z "${WORDPRESS_URL}" ] || [ -z "${WORDPRESS_ADMIN_USER}" ] || [ -z "${WORDPRESS_ADMIN_PASSWORD}" ]; then
+if [ -z "${DOMAIN_NAME}" ] || [ -z "${WORDPRESS_ADMIN_USER}" ] || [ -z "${WORDPRESS_ADMIN_PASSWORD}" ]; then
     echo "Error: Required environment variables are not set."
     exit 1
 fi
