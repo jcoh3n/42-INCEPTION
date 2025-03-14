@@ -1,10 +1,9 @@
 FROM debian:bullseye
-
 # Met à jour les paquets et installe les dépendances nécessaires
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y \
     wget \
-    php7.3 \
+    php \
     php-fpm \
     php-mysql \
     mariadb-client \
@@ -25,8 +24,13 @@ RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
 RUN chown -R www-data:www-data /var/www/wordpress
 
 # Copie le script d'auto-configuration
-COPY auto_config.sh /usr/local/bin/auto_config.sh
+COPY tools/auto_config.sh /usr/local/bin/auto_config.sh
 RUN chmod +x /usr/local/bin/auto_config.sh
+
+# Configure php-fpm
+RUN mkdir -p /run/php
 
 # Définit le point d'entrée
 ENTRYPOINT ["/usr/local/bin/auto_config.sh"]
+
+# ENTRYPOINT ["sleep", "infinity"]

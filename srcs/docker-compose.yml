@@ -8,14 +8,14 @@ services:
   mariadb:
       container_name: mariadb
       networks:
-        - inception            			# à quel network il appartient
+        - inception                  # à quel network il appartient
       build: 
-        context: requirements/mariadb 	# ou se trouve son Dockerfile
+        context: requirements/mariadb   # ou se trouve son Dockerfile
         dockerfile: Dockerfile
       env_file: .env
       volumes:
         - mariadb:/var/lib/mysql
-      restart: unless-stopped     # le container redemarre tant qu'il n'est pas stoppé
+      restart: on-failure     # le container redemarre tant qu'il n'est pas stoppé
       expose:
         - "3306"
 
@@ -25,15 +25,15 @@ services:
         - wordpress:/var/www/wordpress
       networks:
         - inception
-      depends_on:        			 # indique de ne pas démarrer NGINX tant que WordPress n'a pas démarré
+      depends_on:               # indique de ne pas démarrer NGINX tant que WordPress n'a pas démarré
         - wordpress
       build: 
         context: requirements/nginx
         dockerfile: Dockerfile
       env_file: .env
       ports:
-        - "443:443" 		      # on indique le port qui sera exposé a la machine locale
-      restart: on-failure 		# on change, le container redémarrera uniquement en cas de crash
+        - "443:443"           # on indique le port qui sera exposé a la machine locale
+      restart: on-failure     # on change, le container redémarrera uniquement en cas de crash
   
   wordpress:
       container_name: wordpress
@@ -45,7 +45,7 @@ services:
       build: 
         context: requirements/wordpress
         dockerfile: Dockerfile
-      depends_on:    					# WordPress démarrera uniquement après MariaDB (sinon il ne pourra pas configurer la base de données...)
+      depends_on:              # WordPress démarrera uniquement après MariaDB (sinon il ne pourra pas configurer la base de données...)
         - mariadb
       restart: on-failure
       expose: 
@@ -55,15 +55,15 @@ volumes:
   wordpress:
     driver: local # ici nous stockons le volume en local
     driver_opts:
-      type: 'none' 									# aucun type spécifique
+      type: 'none'                   # aucun type spécifique
       o: 'bind'
-      device: '${HOME}/data/wordpress' 		#Utilise une variable d'environnement
+      device: '${HOME}/data/wordpress'     #Utilise une variable d'environnement
   mariadb:
     driver: local
     driver_opts:
       type: 'none' 
-      o: 'bind'										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
-      device: '${HOME}/data/mariadb'			#Utilise une variable d'environnement
+      o: 'bind'                     # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
+      device: '${HOME}/data/mariadb'      #Utilise une variable d'environnement
 
 networks:
   inception:
