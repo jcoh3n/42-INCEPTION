@@ -12,8 +12,16 @@ fi
 # Se place dans le dossier WordPress
 cd /var/www/wordpress
 
+until mysql -h "mariadb" -u "$MARIADB_USER" -p"$MARIADB_USER_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&1; do
+	echo "Database is not ready. Retrying in 5 seconds..."
+	sleep 5
+done
+
+echo "Database is ready"
+
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
+  echo "WordPress is not installed. Installing..."
   wp core download --allow-root
 
   wp core config \
@@ -40,10 +48,14 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
     --user_pass="${WORDPRESS_USER2_PASSWORD}"
 fi
 
-sleep 5 
+echo "WordPress is installed"
+
 # Démarre PHP-FPM (ajustez la version selon celle installée dans votre container)
 # Essayez l'une de ces commandes en fonction de votre configuration
-exec php-fpm7.4 -F
+
+echo "starting wordpress..."
+
+exec php-fpm7.4 -F --allow-to-run-as-root
 # OU si cela ne fonctionne pas, essayez:
 # php-fpm7 -F
 # OU

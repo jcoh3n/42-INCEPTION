@@ -27,6 +27,8 @@ RUN chown -R www-data:www-data /var/www/wordpress
 COPY tools/auto_config.sh /usr/local/bin/auto_config.sh
 RUN chmod +x /usr/local/bin/auto_config.sh
 
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
 # Configure php-fpm
 RUN mkdir -p /run/php
 
