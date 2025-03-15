@@ -53,7 +53,7 @@ echo "WordPress is installed"
 # Démarre PHP-FPM (ajustez la version selon celle installée dans votre container)
 # Essayez l'une de ces commandes en fonction de votre configuration
 
-echo "starting wordpress..."
+echo "starting wordpress"
 
 exec php-fpm7.4 -F --allow-to-run-as-root
 # OU si cela ne fonctionne pas, essayez:
