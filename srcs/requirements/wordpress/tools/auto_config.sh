@@ -1,5 +1,8 @@
 #!/bin/bash
 # Crée le dossier /run/php s'il n'existe pas pour éviter une erreur de PHP-FPM
+
+sleep 10
+
 if [ ! -d "/run/php" ]; then
   mkdir /run/php
 fi
@@ -18,6 +21,7 @@ until mysql -h "mariadb" -u "$MARIADB_USER" -p"$MARIADB_USER_PASSWORD" -e "SHOW 
 done
 
 echo "Database is ready"
+
 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
@@ -54,6 +58,8 @@ echo "WordPress is installed"
 # Essayez l'une de ces commandes en fonction de votre configuration
 
 echo "starting wordpress"
+
+
 
 exec php-fpm7.4 -F --allow-to-run-as-root
 # OU si cela ne fonctionne pas, essayez:
